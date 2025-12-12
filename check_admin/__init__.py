@@ -3,8 +3,8 @@ import json
 import sys
 import os
 
-# Add shared_code to path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Add parent directory to path for shared_code access
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from shared_code.database import _get_db_connection
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
