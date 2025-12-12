@@ -9,3 +9,11 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+.venv/
+.vscode/
+local.settings.json
+.python_packages/
+__blobstorage__/
+__queuestorage__/
+__azurite_db*__.json
+.funcignore
