@@ -12,7 +12,7 @@ def _get_db_connection():
     password = os.getenv('DB_PASSWORD')
     
     environment = os.getenv('ENVIRONMENT', 'local').lower()
-    driver = 'ODBC Driver 18 for SQL Server' if environment == 'azure' else 'SQL Server'
+    driver = 'ODBC Driver 17 for SQL Server' if environment == 'azure' else 'SQL Server'
     
     conn_str = f"DRIVER={{{driver}}};SERVER={server},1433;DATABASE={database};UID={username};PWD={password};Encrypt=no;TrustServerCertificate=yes;"
     conn = pyodbc.connect(conn_str, timeout=10)
@@ -30,7 +30,7 @@ def _get_dw_stagin2_connection():
     password = os.getenv('DB_PASSWORD')
     
     environment = os.getenv('ENVIRONMENT', 'local').lower()
-    driver = 'ODBC Driver 18 for SQL Server' if environment == 'azure' else 'SQL Server'
+    driver = 'ODBC Driver 17 for SQL Server' if environment == 'azure' else 'SQL Server'
     
     conn_str = f"DRIVER={{{driver}}};SERVER={server},1433;DATABASE={database};UID={username};PWD={password};Encrypt=no;TrustServerCertificate=yes;"
     conn = pyodbc.connect(conn_str, timeout=10)
