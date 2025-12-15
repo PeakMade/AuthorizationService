@@ -28,15 +28,27 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         conn = _get_db_connection()
         cursor = conn.cursor()
         
-        query = "SELECT COUNT(*) FROM APP_ADMINS WHERE ADMIN_EMAIL = ? AND APP_ID = ?"
+        query = "SELECT ADMIN_TYPE FROM APP_ADMINS WHERE ADMIN_EMAIL = ? AND APP_ID = ?"
         cursor.execute(query, (admin_email, app_id))
-        count = cursor.fetchone()[0]
+        row = cursor.fetchone()
         
         cursor.close()
         conn.close()
         
+        if row:
+            admin_type = row[0] if row[0] else None
+            result = {
+                "admin": True,
+                "admin_type": admin_type
+            }
+        else:
+            result = {
+                "admin": False,
+                "admin_type": None
+            }
+        
         return func.HttpResponse(
-            json.dumps({"admin": count > 0}),
+            json.dumps(result),
             mimetype="application/json",
             status_code=200
         )

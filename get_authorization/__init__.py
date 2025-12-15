@@ -29,10 +29,15 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         if admin_email and app_id:
             conn = _get_db_connection()
             cursor = conn.cursor()
-            query = "SELECT COUNT(*) FROM APP_ADMINS WHERE ADMIN_EMAIL = ? AND APP_ID = ?"
+            query = "SELECT ADMIN_TYPE FROM APP_ADMINS WHERE ADMIN_EMAIL = ? AND APP_ID = ?"
             cursor.execute(query, (admin_email, app_id))
-            count = cursor.fetchone()[0]
-            result['admin'] = count > 0
+            row = cursor.fetchone()
+            if row:
+                result['admin'] = True
+                result['admin_type'] = row[0] if row[0] else None
+            else:
+                result['admin'] = False
+                result['admin_type'] = None
             cursor.close()
             conn.close()
         
