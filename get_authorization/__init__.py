@@ -2,10 +2,16 @@ import azure.functions as func
 import json
 import sys
 import os
+import time
+import logging
+
+startup = time.time()
 
 # Add shared_code to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from shared_code.database import _get_db_connection, _get_dw_stagin2_connection
+
+logging.warning(f"Function cold start took: {time.time() - startup} seconds")
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     """
